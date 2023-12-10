@@ -1,3 +1,5 @@
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.*;
 
 public class TimeGoalGUI extends JFrame {
@@ -16,5 +18,34 @@ public class TimeGoalGUI extends JFrame {
         add(new JLabel("Set Time Goal (in minutes):"));
         add(timeGoalField);
         add(setGoalButton);
+
+        setGoalButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e){
+                onSetGoalButtonClicked();
+            }
+        });
+    }
+
+    private void onSetGoalButtonClicked() {
+        try {
+            int goal = Integer.parseInt(timeGoalField.getText());
+            if (goal <= 0) {
+                JOptionPane.showMessageDialog(this, "Please enter a positive number for the time goal.");
+            } else {
+                openTaskGUI();
+            }
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(this, "Invalid input. Please enter a valid number.");
+        }
+    }
+
+    private void openTaskGUI() {
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                TaskGUI taskGUI = new TaskGUI();
+                taskGUI.setVisible(true);
+            }
+        });
     }
 }
