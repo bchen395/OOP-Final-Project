@@ -104,13 +104,50 @@ public class TaskGUI extends JFrame {
         // Display each task under the TimeGoal and Progress labels
         taskListPanel.removeAll();
         for (String task : taskList) {
+            JPanel taskPanel = new JPanel();
+            taskPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+
+            taskPanel.setBorder(BorderFactory.createEmptyBorder());
+
+
             JLabel taskLabel = new JLabel(task);
-            taskListPanel.add(taskLabel);
+
+            JButton deleteButton = new JButton("X");
+            deleteButton.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                onDeleteTaskButtonClicked(task);
+                }
+            });
+            
+            taskPanel.add(taskLabel);
+            taskPanel.add(deleteButton);
+
+            taskListPanel.add(taskPanel);
+
         }
+
+        taskListPanel.add(Box.createVerticalGlue());
 
         // Repaint and revalidate the panel to reflect the changes
         taskListPanel.repaint();
         taskListPanel.revalidate();
+    }
+
+    private void onDeleteTaskButtonClicked(String task) {
+        // Extract the task name and time from the task string (format: "Task Name: Task Time minutes")
+        String[] taskParts = task.split(":");
+        String taskName = taskParts[0].trim();
+        int taskTime = Integer.parseInt(taskParts[1].replaceAll("\\D", "").trim());
+    
+        // Remove the task from the taskList
+        taskList.remove(task);
+    
+        // Update the display after removing the task
+        updateTaskDisplay();
+    
+        // Update the progress label by subtracting the time spent on the deleted task
+        timeSpent -= taskTime;
+        progressLabel.setText("Progress: " + timeSpent + " minutes");
     }
 
 }
