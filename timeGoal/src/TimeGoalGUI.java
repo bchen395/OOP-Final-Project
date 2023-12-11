@@ -32,18 +32,19 @@ public class TimeGoalGUI extends JFrame {
             if (goal <= 0) {
                 JOptionPane.showMessageDialog(this, "Please enter a positive number for the time goal.");
             } else {
-                openTaskGUI();
+                openTaskGUI(goal);
             }
         } catch (NumberFormatException ex) {
             JOptionPane.showMessageDialog(this, "Invalid input. Please enter a valid number.");
         }
     }
 
-    private void openTaskGUI() {
+    private void openTaskGUI(int timeGoal) {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                TaskGUI taskGUI = new TaskGUI();
+                TaskGUI taskGUI = new TaskGUI(timeGoal);
+                taskGUI.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                 taskGUI.setVisible(true);
             }
         });
