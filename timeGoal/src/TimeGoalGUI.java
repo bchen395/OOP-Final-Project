@@ -46,6 +46,8 @@ public class TimeGoalGUI extends JFrame {
                 TaskGUI taskGUI = new TaskGUI(timeGoal);
                 taskGUI.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                 taskGUI.setVisible(true);
+
+                dispose();
             }
         });
     }
