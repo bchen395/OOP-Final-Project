@@ -12,6 +12,7 @@ public class TaskGUI extends JFrame {
     private JLabel timeGoalLabel;
     private JLabel progressLabel;
     private JPanel taskListPanel;
+    private JButton newTimeGoalButton;
 
     private int timeGoal;
     private int timeSpent;
@@ -23,7 +24,7 @@ public class TaskGUI extends JFrame {
         this.taskList = new ArrayList<>();
 
         setTitle("Add Completed Task");
-        setSize(400, 300);
+        setSize(500, 300);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new GridLayout(1, 2));
 
@@ -40,6 +41,9 @@ public class TaskGUI extends JFrame {
         leftPanel.add(taskTimeField);
         leftPanel.add(addTaskButton);
 
+        newTimeGoalButton = new JButton("New Time Goal?");
+        leftPanel.add(newTimeGoalButton);
+
         JPanel rightPanel = new JPanel();
         rightPanel.setLayout(new BoxLayout(rightPanel, BoxLayout.Y_AXIS));
 
@@ -51,6 +55,7 @@ public class TaskGUI extends JFrame {
 
         rightPanel.add(timeGoalLabel);
         rightPanel.add(progressLabel);
+        
 
         JScrollPane scrollPane = new JScrollPane(taskListPanel);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
@@ -62,6 +67,12 @@ public class TaskGUI extends JFrame {
         addTaskButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e){
                 onAddTaskButtonClicked();
+            }
+        });
+
+        newTimeGoalButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                onNewTimeGoalButtonClicked();
             }
         });
     }
@@ -149,5 +160,22 @@ public class TaskGUI extends JFrame {
         timeSpent -= taskTime;
         progressLabel.setText("Progress: " + timeSpent + " minutes");
     }
+
+    private void onNewTimeGoalButtonClicked() {
+        String newTimeGoalString = JOptionPane.showInputDialog(this, "Enter new time goal (in minutes):");
+
+        try {
+            int newTimeGoal = Integer.parseInt(newTimeGoalString);
+            if (newTimeGoal >= 0) {
+                timeGoal = newTimeGoal;
+                timeGoalLabel.setText("Time Goal: " + timeGoal + " minutes");
+            } else {
+                JOptionPane.showMessageDialog(this, "Please enter a valid non-negative integer.");
+            }
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(this, "Please enter a valid non-negative integer.");
+        }
+    }
+
 
 }

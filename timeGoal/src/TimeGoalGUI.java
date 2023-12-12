@@ -5,6 +5,7 @@ import javax.swing.*;
 public class TimeGoalGUI extends JFrame {
     private JTextField timeGoalField;
     private JButton setGoalButton;
+    
 
     public TimeGoalGUI(){
         setTitle("Time Goal");
@@ -50,5 +51,13 @@ public class TimeGoalGUI extends JFrame {
                 dispose();
             }
         });
+    }
+
+    public int getTimeGoal() {
+        try {
+            return Integer.parseInt(timeGoalField.getText());
+        } catch (NumberFormatException e) {
+            return 0;
+        }
     }
 }
