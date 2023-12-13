@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 
 public class TaskGUI extends JFrame {
+    // GUI components
     private JTextField taskNameField;
     private JTextField taskTimeField;
     private JButton addTaskButton;
@@ -14,20 +15,24 @@ public class TaskGUI extends JFrame {
     private JPanel taskListPanel;
     private JButton newTimeGoalButton;
 
+    // Task variables
     private int timeGoal;
     private int timeSpent;
     private ArrayList<String> taskList;
 
     public TaskGUI(int timeGoal) {
+        // init task variables
         this.timeGoal = timeGoal; 
         this.timeSpent = 0;
         this.taskList = new ArrayList<>();
 
+        // Main Frame Properties
         setTitle("Add Completed Task");
         setSize(500, 300);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new GridLayout(1, 2));
 
+        // Left Panel components
         JPanel leftPanel = new JPanel();
         leftPanel.setLayout(new BoxLayout(leftPanel, BoxLayout.Y_AXIS));
 
@@ -44,6 +49,7 @@ public class TaskGUI extends JFrame {
         newTimeGoalButton = new JButton("New Time Goal?");
         leftPanel.add(newTimeGoalButton);
 
+        // Right panel components
         JPanel rightPanel = new JPanel();
         rightPanel.setLayout(new BoxLayout(rightPanel, BoxLayout.Y_AXIS));
 
@@ -56,14 +62,16 @@ public class TaskGUI extends JFrame {
         rightPanel.add(timeGoalLabel);
         rightPanel.add(progressLabel);
         
-
+        // task list scrollable
         JScrollPane scrollPane = new JScrollPane(taskListPanel);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         rightPanel.add(scrollPane);
 
+        // add the components
         add(leftPanel);
         add(rightPanel);
 
+        // action listeners for add task and new time goal
         addTaskButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e){
                 onAddTaskButtonClicked();
@@ -77,6 +85,7 @@ public class TaskGUI extends JFrame {
         });
     }
 
+    // method for addTaskButton
     private void onAddTaskButtonClicked(){
         String taskName = getTaskName();
         int taskTime = getTaskTime();
@@ -115,6 +124,7 @@ public class TaskGUI extends JFrame {
         // Display each task under the TimeGoal and Progress labels
         taskListPanel.removeAll();
         for (String task : taskList) {
+            // create a panel for each task with a delete button
             JPanel taskPanel = new JPanel();
             taskPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
 
